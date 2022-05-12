@@ -55,7 +55,7 @@
 
 <script>
 import UserInput from "./UserInput"
-import axios from 'axios';
+// import axios from 'axios';
 
 export default{
     name: 'PhoneContainer',
@@ -77,42 +77,70 @@ export default{
             zipcode: 65616,
             countrycode: "US",
             unit: "imperial",
+            // if the random zip generated doesn't have data we use this to generate again until a valid number appears
+            randomGenWorks: true,
         }
     },
     mounted() {
         // window.addEventListener("resize", this.myEventHandler);
-        this.error_status = 
-        this.callAPI();
+        // this.setRandomZip();
+        // this.callAPI();
     },
     methods: {
+        // Create random zipcode on load
+        setRandomZip(){
+            // generate random num from 1 to 99950 (the range valid US zipcodes)
+            var generatedZip = Math.floor(Math.random() * (99950) + 1);
+            // if the generated number length is less tahn 5 we have to add 0's to fill
+            // EXAMPLE: 1 is not a valid zip, but 00001 is
+            if(generatedZip.toString().length!=5){
+                // target length is 5, so remove the length of the generated number
+                // this is how many 0's we need to add to the beginning
+                // so the number "5" will now be "00005"
+                generatedZip = ("0".repeat(5-generatedZip.toString().length)+generatedZip);
+            }
+            this.zipcode = generatedZip;
+        },
         emit_end(zip){
             this.zipcode = zip;
             this.countrycode = "US";
             // Now the zipcode has been updated so we call the  API
-            this.callAPI();
-        },
-        callAPI(){
-            // Here we call the API to get data from their servers with updated ZIP
-            var link = `https://api.openweathermap.org/data/2.5/weather?zip=${this.zipcode},${this.countrycode}&appid=${this.keyAPI}&units=${this.unit}`
-            axios.get(link)
-            .then(response => {
-                // JSON responses are automatically parsed.
-                console.log("Success\n",response);
-                this.city= response.data.name;
-                this.temp= response.data.main.temp.toFixed(0);
-                this.wind= response.data.wind.speed;
-                this.humidity= response.data.main.humidity;
-                this.pressure= response.data.main.pressure;
-                this.type= response.data.weather[0].description;
-                this.$refs.userInput.$el.className = "true";
-            })
-            .catch(e => {
-                this.$refs.userInput.$el.className = "false";
-                console.log("Error\n",e);
-            })
-            console.log("First page",this.$refs.userInput.$el.className);
 
-        }
+            // this.callAPI();
+        },
+        // callAPI(){
+        //     // Here we call the API to get data from their servers with updated ZIP
+        //     var link = `https://api.openweathermap.org/data/2.5/weather?zip=${this.zipcode},${this.countrycode}&appid=${this.keyAPI}&units=${this.unit}`
+        //     axios.get(link)
+        //     .then(response => {
+        //         // JSON responses are automatically parsed.
+        //         // console.log("Success\n",response);
+        //         this.city= response.data.name;
+        //         this.temp= response.data.main.temp.toFixed(0);
+        //         this.wind= response.data.wind.speed;
+        //         this.humidity= response.data.main.humidity;
+        //         this.pressure= response.data.main.pressure;
+        //         this.type= response.data.weather[0].description;
+        //         this.$refs.userInput.$el.className = "true";
+        //         // if(this.randomGenWorks == false){this.randomGenWorks = true;}
+        //     })
+        //     .catch(e => {
+        //         console.log("ZIP was not found, changing class to False")
+        //         this.$refs.userInput.$el.className = "false";
+        //         console.log(this.$refs.userInput)
+        //         var i_care = false;
+        //         if(i_care){
+        //             console.log("Error\n",e);
+        //         }
+                
+                
+        //         // if(this.randomGenWorks == true){
+        //         //     this.randomGenWorks = false;
+        //         //     this.setRandomZip();
+        //         // }
+        //     })
+        //     console.log("First page",this.$refs.userInput.$el.className);
+        // }
     },
 }
 </script>
@@ -134,7 +162,7 @@ export default{
 #notification_text{
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: 2.8vw;
+    font-size: 20px;
     text-shadow: 1px 1px 2px rgba(61, 61, 61, 0.5);
 }
 #notification_logo{
@@ -192,10 +220,10 @@ export default{
     color: white;
     font-family: 'Roboto Condensed', serif;
     font-weight: bold;
-    font-size: 25vw;
+    font-size: 210px;
     /* border: 1px solid lime; */
     width: 100%;
-    height: 35%;
+    height: 30%;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -206,38 +234,50 @@ export default{
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.172);
 }
 #body_weathertype{
-    height: 7%;
-    font-size: 5vw;
+    height: 10%;
+    font-size: 50px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: white;
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.192);
 }
 #body_date{
-    height: 8%;
-    font-size: 2.5vw;
+    height: 5%;
+    font-size: 20px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: rgba(255,255,255,0.6);
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.142);
 }
 #body_multidata{
-    height: 15%;
+    height: 20%;
     width: 100%;
+    position: relative;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     /* border: 1px solid lime; */
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.192);
+}
+#body_multidata::after{
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 70%;
+    border-radius: 5px;
+    height: 2px;
+    background-color: rgba(100,100,100,0.3);
 }
 .multidata_title{
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: white;
     text-align: center;
-    font-size: 2.8vw;
+    font-size: 25px;
 }
 .multidata_info{
-    font-size: 2.2vw;
+    font-size: 15px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: rgba(255,255,255,0.6);
@@ -247,8 +287,10 @@ export default{
     /* border: 1px solid red; */
 }
 #phone_container{
+    transition: 0.5s ease;
     position: relative;
-    width: 20%;
+    /* width: 30%; */
+    height: 80vh;
     aspect-ratio: 0.50;
     border-radius: 20%/10%;
     border: 10px solid black;
@@ -341,32 +383,33 @@ export default{
 
 @media only screen and (max-width: 1500px){
     #phone_container{
-        width: 25%;
+        /* width: 25%; */
+        /* transform: scale(0.9); */
     }
 }
 @media only screen and (max-width: 1300px){
     #phone_container{
-        width: 30%;
+        /* transform: scale(0.8); */
     }
 }
 @media only screen and (max-width: 1100px){
     #phone_container{
-        width: 40%;
+        /* transform: scale(0.7); */
     }
 }
 @media only screen and (max-width: 900px){
     #phone_container{
-        width: 50%;
+        /* transform: scale(0.6); */
     }
 }
 @media only screen and (max-width: 800px){
     #phone_container{
-        width: 60%;
+        /* transform: scale(0.5); */
     }
 }
 @media only screen and (max-width: 700px){
     #phone_container{
-        width: 65%;
+        /* transform: scale(0.4); */
     }
 }
 </style>
