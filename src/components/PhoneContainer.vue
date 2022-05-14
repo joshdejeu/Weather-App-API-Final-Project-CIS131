@@ -91,6 +91,7 @@ export default{
             this.pressure=pressure;
             this.type=type;
             this.icon=`../assets/icons/${this.setIcon(ico)}.png`;
+            console.log(ico)
             // A.1) I want to format lat and long into a single coordinate (Exmaple: "42°N 64°W")
             // A.2) here we check North, East, West, and South and make a string to display
             // A.3) parse the variable to an int, if it is positive for Lattitude it is North, for Longitude it is East, and the opposite for negatives
@@ -105,12 +106,12 @@ export default{
         // B.0) Set the icon image based on API weather type
         setIcon(icon){
             // B.1) These are the most common icons I could find so I created images to display when we see this in the API response
-            if(icon=="01n"){return "josh_sun";}
-            if(icon=="02n"){return "josh_cloud_scat";}
-            if(icon=="03n"){return "josh_cloud_scat";}
-            if(icon=="04n"){return "josh_cloud3";}
+            if(icon=="01n" || icon=="01d"){return "josh_sun";}
+            if(icon=="02n" || icon=="02d"){return "josh_cloud_scat";}
+            if(icon=="03n" || icon=="03d"){return "josh_cloud_scat";}
+            if(icon=="04n" || icon=="04d"){return "josh_cloud_overcast";}
             if(icon=="50d" || icon=="50n"){return "josh_fog";}
-            if(icon=="10n"){return "josh_rain_heavy";}
+            if(icon=="10d" || icon=="10n"){return "josh_rain_heavy";}
             // B.2) since not all icons are accounted for, the default icon is set here
             else{return "josh_sun";}
         }
