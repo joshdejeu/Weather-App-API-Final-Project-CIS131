@@ -3,7 +3,7 @@
 ## To set up the project
 
 ### 1) Click the 'Code' button and select 'Download ZIP'
-![alt text](https://docs.github.com/assets/cb-20363/images/help/repository/code-button.png)
+![](screenshots)
 
 ### 2) This requires the 'node_modules' folder so type this in the correct directory terminal
 ```

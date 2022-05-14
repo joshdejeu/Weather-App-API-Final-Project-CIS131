@@ -3,7 +3,7 @@ node_modules
 /dist
 
 # Images for README.md file (not necessary)
-screenshots
+# screenshots
 
 # local env files
 .env.local
