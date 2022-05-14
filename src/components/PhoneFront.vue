@@ -1,5 +1,5 @@
 <template>
-    <div id="phone_container">
+    <div id="phone_front">
         <div id="weather_dispaly">
             <div id="camera_lip"></div>
             <div id="weather_header">
@@ -59,7 +59,7 @@
 <script>
 import UserInput from "./UserInput"
 export default{
-    name: 'PhoneContainer',
+    name: 'PhoneFront',
     components: {
     UserInput
     },
@@ -119,7 +119,7 @@ export default{
 }
 </script>
 
-<style scoped>
+<style>
 #weather_dispaly{
     position: relative;
     widows: 100%;
@@ -136,6 +136,7 @@ export default{
      -10px -0px 10px rgba(27, 171, 255, 0.3);
     animation: backgroundMove 7s linear infinite;
     /* animation: snow 7s linear infinite; */
+    /* background-size: 200% 150%; */
     background-size: 200% 200%;
     /* so Psuedo ::after appears under */
     transform-style: preserve-3d;
@@ -150,7 +151,7 @@ export default{
     0%{background-position: 0% 100%;}
     100%{background-position: 100% 0%;}
 }
-#phone_container{
+#phone_front{
     transition: 0.5s ease;
     position: relative;
     /* width: 30%; */
@@ -404,33 +405,33 @@ export default{
 }
 
 @media only screen and (max-width: 1500px){
-    #phone_container{
+    #phone_front{
         /* width: 25%; */
         /* transform: scale(0.9); */
     }
 }
 @media only screen and (max-width: 1300px){
-    #phone_container{
+    #phone_front{
         /* transform: scale(0.8); */
     }
 }
 @media only screen and (max-width: 1100px){
-    #phone_container{
+    #phone_front{
         /* transform: scale(0.7); */
     }
 }
 @media only screen and (max-width: 900px){
-    #phone_container{
+    #phone_front{
         /* transform: scale(0.6); */
     }
 }
 @media only screen and (max-width: 800px){
-    #phone_container{
+    #phone_front{
         /* transform: scale(0.5); */
     }
 }
 @media only screen and (max-width: 700px){
-    #phone_container{
+    #phone_front{
         /* transform: scale(0.4); */
     }
 }
