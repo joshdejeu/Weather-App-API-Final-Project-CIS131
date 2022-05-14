@@ -3,7 +3,10 @@
         <div id="weather_dispaly">
             <div id="camera_lip"></div>
             <div id="weather_header">
-                <div id="weather_header1"></div>
+                <div id="weather_header1">
+                    <div class="latlong">{{coords}}</div>
+                    <!-- <div class="latlong">Lon: {{lon}}</div> -->
+                </div>
                 <div id="weather_header2">
                     <img src="../assets/pin.png" id="header_img">
                     <h2 id="header_city">{{city}}</h2>
@@ -17,7 +20,7 @@
             <div id="weather_body">
 
                 <div id="body_image_container">
-                    <img id="body_image" src="../assets/cloud1.png" alt="">
+                    <img id="body_image" :src="icon" alt="">
                 </div>
 
                 <div id="body_temp">{{temp}}<div id="degree"></div></div>
@@ -27,7 +30,7 @@
                 <div id="body_multidata">
                     <div class="multidata">
                         <img src="" alt="">
-                        <h3 class="multidata_title">{{wind}} km/h</h3>
+                        <h3 class="multidata_title">{{wind}} {{wind_measure}}</h3>
                         <h3 class="multidata_info">Wind</h3>
                     </div>
                     <div class="multidata">
@@ -66,86 +69,93 @@ export default{
     },
     data(){
         return{
-            city: "Minsk",
-            temp: 21,
-            type: "Thunderstorm",
+            lat: "123.45",
+            lon: "67.89",
+            city: "Loading",
+            temp: 0,
+            type: "cloudy",
             date: "Tuesday, May 5th",
             wind: 0,
             humidity: 0,
             pressure: 0,
-            keyAPI: "b14a0f6f86b259ba7073b364662a0387",
-            zipcode: 65616,
-            countrycode: "US",
-            unit: "imperial",
+            wind_measure: "mi/h",
+            coords: "00°N 00°W",
+            icon: "../assets/cloud1.png",
             // if the random zip generated doesn't have data we use this to generate again until a valid number appears
             randomGenWorks: true,
         }
     },
-    mounted() {
-        // window.addEventListener("resize", this.myEventHandler);
-        // this.setRandomZip();
-        // this.callAPI();
-    },
     methods: {
-        // Create random zipcode on load
-        setRandomZip(){
-            // generate random num from 1 to 99950 (the range valid US zipcodes)
-            var generatedZip = Math.floor(Math.random() * (99950) + 1);
-            // if the generated number length is less tahn 5 we have to add 0's to fill
-            // EXAMPLE: 1 is not a valid zip, but 00001 is
-            if(generatedZip.toString().length!=5){
-                // target length is 5, so remove the length of the generated number
-                // this is how many 0's we need to add to the beginning
-                // so the number "5" will now be "00005"
-                generatedZip = ("0".repeat(5-generatedZip.toString().length)+generatedZip);
-            }
-            this.zipcode = generatedZip;
+        // Received data from child component where API was called
+        emit_end(city,temp,wind,humidity,pressure,type,lat,lon,unit,icon){
+            this.city=city;
+            this.temp=temp;
+            this.wind=wind;
+            this.humidity=humidity;
+            this.pressure=pressure;
+            this.type=type;
+            this.type = "cloudy";
+            this.icon=`http://openweathermap.org/img/wn/${icon}@2x.png`;
+            // I want to format lat and long into a single coordinate
+            // here we check North, East, West, and South and make a string to display
+            if(parseInt(lat)>0){this.lat=lat+"°N";}
+            else{this.lat=Math.abs(lat)+"°S";}
+            if(parseInt(lon)>0){this.lat=lat+"°E";}
+            else{this.lon=Math.abs(lon)+"°W";}
+            this.coords = this.lat+" "+this.lon;
+            if(unit=="metric"){this.wind_measure="m/s";}
+            else{this.wind_measure="mi/h";}
         },
-        emit_end(zip){
-            this.zipcode = zip;
-            this.countrycode = "US";
-            // Now the zipcode has been updated so we call the  API
-
-            // this.callAPI();
-        },
-        // callAPI(){
-        //     // Here we call the API to get data from their servers with updated ZIP
-        //     var link = `https://api.openweathermap.org/data/2.5/weather?zip=${this.zipcode},${this.countrycode}&appid=${this.keyAPI}&units=${this.unit}`
-        //     axios.get(link)
-        //     .then(response => {
-        //         // JSON responses are automatically parsed.
-        //         // console.log("Success\n",response);
-        //         this.city= response.data.name;
-        //         this.temp= response.data.main.temp.toFixed(0);
-        //         this.wind= response.data.wind.speed;
-        //         this.humidity= response.data.main.humidity;
-        //         this.pressure= response.data.main.pressure;
-        //         this.type= response.data.weather[0].description;
-        //         this.$refs.userInput.$el.className = "true";
-        //         // if(this.randomGenWorks == false){this.randomGenWorks = true;}
-        //     })
-        //     .catch(e => {
-        //         console.log("ZIP was not found, changing class to False")
-        //         this.$refs.userInput.$el.className = "false";
-        //         console.log(this.$refs.userInput)
-        //         var i_care = false;
-        //         if(i_care){
-        //             console.log("Error\n",e);
-        //         }
-                
-                
-        //         // if(this.randomGenWorks == true){
-        //         //     this.randomGenWorks = false;
-        //         //     this.setRandomZip();
-        //         // }
-        //     })
-        //     console.log("First page",this.$refs.userInput.$el.className);
-        // }
     },
 }
 </script>
 
 <style scoped>
+#weather_dispaly{
+    position: relative;
+    widows: 100%;
+    height: 75%;
+    border-radius: 19%/11.7%;
+    background: linear-gradient(15deg, #1070f7,#12d0ff);
+    /* background: linear-gradient(15deg, #1070f7, transparent, #12d0ff), url('../assets/snow.png'); */
+    /* background: radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('../assets/raincloud.png'); */
+    /* background: radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('../assets/snow.png'); */
+    box-shadow:
+     inset 0px 0px 5px 1px rgba(99, 219, 255,0.7),
+     0px -10px 10px rgba(27, 171, 255, 0.3),
+     10px -0px 10px rgba(27, 171, 255, 0.3),
+     -10px -0px 10px rgba(27, 171, 255, 0.3);
+    animation: backgroundMove 7s linear infinite;
+    /* animation: snow 7s linear infinite; */
+    background-size: 200% 200%;
+    /* so Psuedo ::after appears under */
+    transform-style: preserve-3d;
+}
+@keyframes backgroundMove {
+    0%{background-position: 100% 100%;}
+    20%{background-position: 100% 0%;}
+    50%{background-position: 0% 0%;}
+    100%{background-position: 100% 100%;}
+}
+@keyframes snow {
+    0%{background-position: 0% 100%;}
+    100%{background-position: 100% 0%;}
+}
+#phone_container{
+    transition: 0.5s ease;
+    position: relative;
+    /* width: 30%; */
+    height: 80vh;
+    aspect-ratio: 0.50;
+    border-radius: 20%/10%;
+    border: 10px solid black;
+    overflow: visible;
+    /* background: #000918; */
+    background: #051838;
+    box-shadow:
+    0px 0px 100px rgba(255, 255, 255, 0.3),
+    inset 0px 0px 10px rgba(9, 47, 112, 0.5);
+}
 #notification_container{
     position: absolute;
     top: 5%;
@@ -162,7 +172,7 @@ export default{
 #notification_text{
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: 20px;
+    font-size: 15px;
     text-shadow: 1px 1px 2px rgba(61, 61, 61, 0.5);
 }
 #notification_logo{
@@ -195,18 +205,16 @@ export default{
 }
 #body_image_container{
     width: 100%;
-    height: 35%;
+    height: 45%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;    
-    /* border: 1px solid lime; */
 }
 #body_image{
     height: 100%;
     transform: scale(0.75);
     display: block;
-    /* border: 1px solid red; */
     -webkit-filter: drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.35));
     filter: drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.35));
 }
@@ -220,10 +228,9 @@ export default{
     color: white;
     font-family: 'Roboto Condensed', serif;
     font-weight: bold;
-    font-size: 210px;
-    /* border: 1px solid lime; */
+    font-size: 140px;
     width: 100%;
-    height: 30%;
+    height: 25%;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -234,16 +241,16 @@ export default{
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.172);
 }
 #body_weathertype{
-    height: 10%;
-    font-size: 50px;
+    height: 7%;
+    font-size: 25px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: white;
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.192);
 }
 #body_date{
-    height: 5%;
-    font-size: 20px;
+    height: 3%;
+    font-size: 12px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: rgba(255,255,255,0.6);
@@ -256,7 +263,6 @@ export default{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    /* border: 1px solid lime; */
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.192);
 }
 #body_multidata::after{
@@ -267,57 +273,35 @@ export default{
     width: 70%;
     border-radius: 5px;
     height: 2px;
-    background-color: rgba(100,100,100,0.3);
+    background-color: rgba(255,255,255,0.15);
 }
 .multidata_title{
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: white;
     text-align: center;
-    font-size: 25px;
+    font-size: 15px;
 }
 .multidata_info{
-    font-size: 15px;
+    font-size: 12px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: rgba(255,255,255,0.6);
     text-align: center;
 }
-#body_multidata>div{
-    /* border: 1px solid red; */
-}
-#phone_container{
-    transition: 0.5s ease;
-    position: relative;
-    /* width: 30%; */
-    height: 80vh;
-    aspect-ratio: 0.50;
-    border-radius: 20%/10%;
-    border: 10px solid black;
-    overflow: visible;
-    background: #000918;
-    box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.3);
-}
-#weather_dispaly{
-    position: relative;
-    widows: 100%;
-    height: 75%;
-    border-radius: 19%/11.7%;
-
-    background: linear-gradient(15deg, #1070f7 , #12d0ff);
-    box-shadow:
-     inset 0px 0px 5px 1px rgba(99, 219, 255,0.7),
-     0px -10px 10px rgba(27, 171, 255, 0.3),
-     10px -0px 10px rgba(27, 171, 255, 0.3),
-     -10px -0px 10px rgba(27, 171, 255, 0.3);
-    animation: backgroundMove 7s linear infinite;
-    background-size: 200% 200%;
-}
-@keyframes backgroundMove {
-    0%{background-position: 100% 100%;}
-    20%{background-position: 100% 0%;}
-    50%{background-position: 0% 0%;}
-    100%{background-position: 100% 100%;}
+#weather_dispaly::after{
+    content: '';
+    transform: translateZ(-1px);
+    position: absolute;
+    bottom: -2%;
+    left: 17.5%;
+    width: 65%;
+    height: 10%;
+    background: rgba(16, 155, 247, 0.3);
+    box-shadow: 
+    0px 0px 15px rgba(16, 155, 247, 0.85),
+    inset 0px 0px 15px rgba(85, 178, 240, 0.7);
+    border-radius: 20px;
 }
 /* #weather_display:before{
     content: "test";
@@ -348,30 +332,59 @@ export default{
      display: flex;
      justify-content: space-evenly;
      align-items: end;
+     position: relative;
  }
-#weather_header>div{
-    width: 100%;
+ #status_color{
+     width: 5px;
+     height: 5px;
+     background-color: red;
+     border-radius: 50%;
+     margin-right: 5px;
+ }
+ .latlong{
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    padding: 2px 8px;
+ }
+#weather_header1{
+    position: relative;
+    width: 40%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
+    font-size: 0.8em;
+    padding-left: 10%;
 }
 #weather_header2{
+    width: 100%;
     position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+#weather_header3{
+    position: absolute;
+    right: 0;
+    flex-direction: column;
+    cursor: pointer;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
 }
 #header_city{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 600;
-    font-size: 1.5em;
+    font-size: 1.4em;
 }
 #header_img{
     position: relative;
-    width: 20%;
-    min-width:20%;
+    min-width: 10%;
+    max-width: 10%;
     filter: brightness(0%) invert(100%);
-}
-#weather_header3{
-    flex-direction: column;
-    cursor: pointer;
 }
 #weather_header3>div{
     width: 4px;
