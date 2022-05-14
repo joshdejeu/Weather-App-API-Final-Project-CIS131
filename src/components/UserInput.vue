@@ -18,7 +18,7 @@
 <script>
 import axios from 'axios';
 // importing api key from .txt file
-import STORED_API_KEY from '../API_KEY.txt';
+import STORED_API_KEY from '../YOUR_API_KEY.txt';
 
 export default {
     name: 'UserInput',
