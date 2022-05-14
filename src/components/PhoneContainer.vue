@@ -58,8 +58,6 @@
 
 <script>
 import UserInput from "./UserInput"
-// import axios from 'axios';
-
 export default{
     name: 'PhoneContainer',
     components: {
@@ -80,24 +78,22 @@ export default{
             pressure: 0,
             wind_measure: "mi/h",
             coords: "00°N 00°W",
-            icon: "../assets/cloud1.png",
-            // if the random zip generated doesn't have data we use this to generate again until a valid number appears
-            randomGenWorks: true,
+            icon: "../assets/icons/josh_sun.png",
         }
     },
     methods: {
-        // Received data from child component where API was called
-        emit_end(city,temp,wind,humidity,pressure,type,lat,lon,unit,icon){
+        // A.0) Converting data received from API to data to be displayed
+        emit_end(city,temp,wind,humidity,pressure,type,lat,lon,unit,ico){
             this.city=city;
             this.temp=temp;
             this.wind=wind;
             this.humidity=humidity;
             this.pressure=pressure;
             this.type=type;
-            this.type = "cloudy";
-            this.icon=`http://openweathermap.org/img/wn/${icon}@2x.png`;
-            // I want to format lat and long into a single coordinate
-            // here we check North, East, West, and South and make a string to display
+            this.icon=`../assets/icons/${this.setIcon(ico)}.png`;
+            // A.1) I want to format lat and long into a single coordinate (Exmaple: "42°N 64°W")
+            // A.2) here we check North, East, West, and South and make a string to display
+            // A.3) parse the variable to an int, if it is positive for Lattitude it is North, for Longitude it is East, and the opposite for negatives
             if(parseInt(lat)>0){this.lat=lat+"°N";}
             else{this.lat=Math.abs(lat)+"°S";}
             if(parseInt(lon)>0){this.lat=lat+"°E";}
@@ -106,6 +102,18 @@ export default{
             if(unit=="metric"){this.wind_measure="m/s";}
             else{this.wind_measure="mi/h";}
         },
+        // B.0) Set the icon image based on API weather type
+        setIcon(icon){
+            // B.1) These are the most common icons I could find so I created images to display when we see this in the API response
+            if(icon=="01n"){return "josh_sun";}
+            if(icon=="02n"){return "josh_cloud_scat";}
+            if(icon=="03n"){return "josh_cloud_scat";}
+            if(icon=="04n"){return "josh_cloud3";}
+            if(icon=="50d" || icon=="50n"){return "josh_fog";}
+            if(icon=="10n"){return "josh_rain_heavy";}
+            // B.2) since not all icons are accounted for, the default icon is set here
+            else{return "josh_sun";}
+        }
     },
 }
 </script>

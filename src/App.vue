@@ -13,6 +13,19 @@ export default {
     PhoneContainer
   }
 }
+// Code by Josh D
+// The structure of this project is a Phone Container component with an area to display data
+// The Phone Container component contains the 2nd and last component which is called User Input
+// 
+// Inside the User Input container it handles everything from:
+//    1) validating zipcodes
+//    2) calling the API
+//    3) sending the PhoneContainer API responses
+//    2) displaying successful and failed API calls
+//    2) generating new random zipcodes on load
+//    4) and options for Imperial or Metric measurements
+// 
+// Enjoy!
 </script>
 
 <style>
