@@ -17,6 +17,8 @@
 
 <script>
 import axios from 'axios';
+// importing api key from .txt file
+import STORED_API_KEY from '../API_KEY.txt';
 
 export default {
     name: 'UserInput',
@@ -30,7 +32,7 @@ export default {
         key: "",
         zipcode: 11111,
         date: "Tuesday, May 5th",
-        keyAPI: "b14a0f6f86b259ba7073b364662a0387",
+        keyAPI: STORED_API_KEY,
         countrycode: "US",
         unit: "imperial",
         APIerror: 'none',

@@ -2,6 +2,8 @@
 node_modules
 /dist
 
+#API key for weather API
+API_KEY.txt
 
 # local env files
 .env.local
