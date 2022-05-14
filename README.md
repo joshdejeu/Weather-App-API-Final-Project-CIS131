@@ -3,7 +3,7 @@
 ## To set up the project
 
 ### 1) Click the 'Code' button and select 'Download ZIP'
-![](screenshots)
+![](screenshots/step1.png)
 
 ### 2) This requires the 'node_modules' folder so type this in the correct directory terminal
 ```
