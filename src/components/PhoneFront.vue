@@ -106,6 +106,7 @@ export default{
         // B.0) Set the icon image based on API weather type
         setIcon(icon){
             // B.1) These are the most common icons I could find so I created images to display when we see this in the API response
+            // (images were created using blender)
             if(icon=="01n" || icon=="01d"){return "josh_sun";}
             if(icon=="02n" || icon=="02d"){return "josh_cloud_scat";}
             if(icon=="03n" || icon=="03d"){return "josh_cloud_scat";}
@@ -154,9 +155,10 @@ export default{
 #phone_front{
     transition: 0.5s ease;
     position: relative;
-    /* width: 30%; */
-    height: 80vh;
-    aspect-ratio: 0.50;
+    /* height: 80vh; */
+    /* aspect-ratio: 0.50; */
+    height: 100%;
+    width: 100%;
     border-radius: 20%/10%;
     border: 10px solid black;
     overflow: visible;
@@ -164,7 +166,11 @@ export default{
     background: #051838;
     box-shadow:
     0px 0px 100px rgba(255, 255, 255, 0.3),
-    inset 0px 0px 10px rgba(9, 47, 112, 0.5);
+    inset 0px 0px 10px rgba(9, 47, 112, 0.5),
+    0px 0px 0px 2px #51657a,
+    0px 0px 0px 3px #e1e5e8,
+    0px 0px 0px 4px #67748e,
+    0px 0px 0px 5px #bfc4c7;
 }
 #notification_container{
     position: absolute;
@@ -327,9 +333,9 @@ export default{
 #camera_lip{
     z-index: 4;
     width: 40%;
-    height: 5%;
+    height: 6%;
     position: absolute;
-    top: 0;
+    top: -1.5%;
     left: 30%;
     background: black;
     border-bottom-left-radius: 20px;

@@ -1,7 +1,17 @@
 <template>
   <div id="app">
     <div id="phone_container">
-      <div  id="phone_back"></div>
+      <div id="phone_back"></div>
+      <div id="phone_right"></div>
+      <div id="phone_left"></div>
+      <div id="phone_top"></div>
+      <div id="phone_bottom"></div>
+
+      <div id="top_left"></div>
+      <div id="bottom_left"></div>
+      <div id="top_right"></div>
+      <div id="bottom_right"></div>
+
       <PhoneFront/>
     </div>
 
@@ -42,8 +52,8 @@ export default {
   }
 }
 // Code by Josh D
-// The structure of this project is a Phone Container component with an area to display data
-// The Phone Container component contains the 2nd and last component which is called User Input
+// The structure of this project is a Phone Front component with an area to display data and area for user input
+// The Phone Front component contains the 2nd and last component which is called User Input
 // 
 // Inside the User Input container it handles everything from:
 //    1) validating zipcodes
@@ -58,25 +68,30 @@ export default {
 
 <style>
 #phone_container{
+    perspective: 100%;
     transform-style: preserve-3d;
     position: relative;
     height: 80vh;
     aspect-ratio: 0.50;
     transition: 0.5s ease;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    transform: rotateX(70deg) rotateY(0deg) rotateZ(0deg);
 }
 /* #phone_front{
 } */
 #phone_back{
     position: absolute;
-    transform: translateZ(-30px);
-    width: 104%;
+    transform: translateZ(-25px);
     height: 100%;
+    width: 100%;
     border-radius: 20%/10%;
     border: 10px solid black;
-    overflow: visible;
+    box-shadow:     
+    0px 0px 0px 2px #51657a,
+    0px 0px 0px 3px #e1e5e8,
+    0px 0px 0px 4px #67748e,
+    0px 0px 0px 5px #bfc4c7;;
     /* background: #000918; */
-    background: #051838;
+    background: linear-gradient(0deg,#8ca1b5,#b7d5ef);
 }
 #phone_back::after{
   content: '';
@@ -86,8 +101,94 @@ export default {
   transform: translateZ(300px);
   /* background-color: white; */
 }
-
-
+#phone_right{
+  background-color: #67748e;
+  background: linear-gradient(-130deg, rgb(99, 99, 100) 30%, #a4adb8 40%, #b2c1ce 50%, #67748e 60%);
+  height: 85%;
+  width: 24px;
+  transform: translateZ(-12.5px) rotateY(90deg);
+  position: absolute;
+  top: 9%;
+  left: calc(100% + 12px);
+}
+#phone_left{
+  background-color: #67748e;
+  background: linear-gradient(-130deg, rgb(102, 102, 105) 30%, #aabccc 40%, #b1bbc7 50%, #67748e 60%);
+  height: 85%;
+  width: 24px;
+  transform: translateZ(-12.5px) rotateY(90deg);
+  position: absolute;
+  top: 9%;
+  left: calc(0% - 12px);
+}
+#phone_top{
+  background-color: #67748e;
+  background: linear-gradient(130deg, rgb(92, 92, 94) 30%, #a8b3c5 40%, #adc3cf 50%, #67748e 60%);
+  height: 24px;
+  width: 70%;
+  transform: translateZ(-12.5px) rotateX(90deg) ;
+  position: absolute;
+  top: -15px;
+  left: 17%;
+}
+#phone_bottom{
+  background-color: #67748e;
+  background: linear-gradient(130deg, rgb(103, 103, 105) 30%, #9497a1 40%, #939aa3 50%, #67748e 60%);
+  height: 24px;
+  width: 70%;
+  transform: translateZ(-12.5px) rotateX(90deg) ;
+  position: absolute;
+  bottom: -33px;
+  left: 17%;
+}
+#bottom_left{
+  content: '';
+  background-color: #67748e;
+  background: linear-gradient(130deg, rgb(103, 103, 105), #67748e);
+  height: 24px;
+  width: 95px;
+  display: inline-block;
+  transform: translateZ(-12.5px) rotateZ(45deg) rotateX(90deg);
+  position: absolute;
+  bottom: 0;
+  left: -14px;
+}
+#bottom_right{
+  content: '';
+  background-color: #67748e;
+  background: linear-gradient(45deg, rgb(103, 103, 105), #67748e);
+  height: 24px;
+  width: 95px;
+  display: inline-block;
+  transform: translateZ(-12.5px) rotateZ(-45deg) rotateX(90deg);
+  position: absolute;
+  bottom: 0;
+  right: -30px;
+}
+#top_left{
+  content: '';
+  background-color: #67748e;
+  background: linear-gradient(45deg, rgb(103, 103, 105), #67748e);
+  height: 24px;
+  width: 95px;
+  display: inline-block;
+  transform: translateZ(-12.5px) rotateZ(-45deg) rotateX(90deg);
+  position: absolute;
+  top: 20px;
+  left: -14px;
+}
+#top_right{
+  content: '';
+  background-color: #67748e;
+  background: linear-gradient(-0deg, rgb(103, 103, 105), #67748e);
+  height: 24px;
+  width: 95px;
+  display: inline-block;
+  transform: translateZ(-12.5px) rotateZ(45deg) rotateX(90deg);
+  position: absolute;
+  top: 20px;
+  right: -30px;
+}
 
 
 #rotate_controls{
@@ -112,6 +213,7 @@ html,body{
   height: 100%;
 }
 body{
+  overflow: hidden;
   background: linear-gradient(135deg,#4f63fe, #3b9fcc , #05449e);
 }
 #app {
