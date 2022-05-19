@@ -74,7 +74,7 @@ export default {
     height: 80vh;
     aspect-ratio: 0.50;
     transition: 0.5s ease;
-    transform: rotateX(70deg) rotateY(0deg) rotateZ(0deg);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
 }
 /* #phone_front{
 } */
