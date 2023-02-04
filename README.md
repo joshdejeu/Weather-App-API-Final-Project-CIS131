@@ -1,31 +1,28 @@
-# weatherapp
+# Weather App
+
+
+![Screenshot](https://i.postimg.cc/q7gLqnWB/phonee.png)
+
 
 ## To set up the project
+Make sure you have Node installed
 
-### 1) Click the 'Code' button and select 'Download ZIP'
-![](screenshots/step1.png)
+### 1) Clone or Pull
+This is a a Vue.js projected created on Vue2. Simply pull or clone this repo
 
-### 2) Find the location of the downloaded file
-![](screenshots/step2.png)
-
-### 3) Extract all the files/folders from the ZIP
-![](screenshots/step3.png)
-
-### 4) Note the location (path) of where you extract to
-![](screenshots/step4.png)
-
-### 5) Open 'Final-Project-CIS131-master' inside your editor
-![](screenshots/step5.png)
-
-### 6) Find the .txt file 'YOUR_API_KEY' (inside of the 'src' folder) and paste your API key on line 1
-![](screenshots/step6.png)
-
-### 7) Open a terminal to install the 'node_modules' folder by typing
+### 2) Install Dependencies
 ```
-npm install
+npm i
 ```
 
-### 8) CONGRATS! You're finally ready to view the file, to finish, type
+### 3) Start the server
 ```
 npm run serve
 ```
+
+### 4) Register your own API key at https://openweathermap.org/api
+Navigate to this path inside the project and paste your own API key here
+```
+src/YOUR_API_KEY.txt
+```
+

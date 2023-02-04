@@ -225,6 +225,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1200px
 
 }
 
