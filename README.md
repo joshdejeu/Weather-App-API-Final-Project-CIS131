@@ -18,7 +18,7 @@ npm i
 
 ### 3) Start the server
 ```
-npm run serve
+npm run serve 
 ```
 
 ### 4) Register your own API key at https://openweathermap.org/api
