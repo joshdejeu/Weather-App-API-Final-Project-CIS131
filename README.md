@@ -1,5 +1,6 @@
 # Weather App
 
+<a href="https://weather-app-api-final-project-cis131.pages.dev/">View Live Site</a>
 
 ![Screenshot](https://i.postimg.cc/q7gLqnWB/phonee.png)
 
