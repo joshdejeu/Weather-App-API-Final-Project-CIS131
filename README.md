@@ -1,9 +1,13 @@
-# Weather App
+<div align="center">
+  
+[![Button Shield]](https://weather-app-api-final-project-cis131.pages.dev/)
 
-<a href="https://weather-app-api-final-project-cis131.pages.dev/">View Live Site</a>
+[Button Shield]: https://img.shields.io/badge/View_Live_Site-37a779?style=for-the-badge
+</div>
 
 ![Screenshot](https://i.postimg.cc/q7gLqnWB/phonee.png)
 
+# Weather App
 
 ## To set up the project
 Make sure you have Node installed
